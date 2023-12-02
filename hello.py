@@ -42,7 +42,29 @@ def get_specific_tweet(tweet_id):
         else:
             return jsonify({"error": "Tweet not found"}), 404
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 500   
+#assignment19
+@app.route('/tweets', methods=['POST'])
+def create_tweet():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({"error": "Bad or incomplete request"}), 400
+
+    new_tweet = {
+        'id': len(tweets_data) + 1,
+        'text': data['text']
+        # Add other tweet data as needed
+    }
+    tweets_data.append(new_tweet)
+
+    # Update the JSON file with the new tweet data
+    try:
+        with open('100tweets.json', 'w', encoding='utf-8') as file:
+            json.dump(tweets_data, file, indent=2, ensure_ascii=False)
+    except Exception as e:
+        return jsonify({"error": f"Failed to update file: {e}"}), 500
+
+    return jsonify({"message": "Tweet created successfully", "tweet": new_tweet}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
