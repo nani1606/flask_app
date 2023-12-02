@@ -46,3 +46,9 @@ def get_specific_tweet(tweet_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+#curl "localhost:5000"
+#curl "localhost:5000/tweets"
+#curl "localhost:5000/tweets/filter?user_name=maxosteela"
+#curl "localhost:5000/tweets/1360000000000000"
+#curl -X get "localhost:5000/tweets/filter?user_name=maxosteela"
